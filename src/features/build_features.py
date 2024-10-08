@@ -18,8 +18,8 @@ from sklearn.preprocessing import Binarizer,OrdinalEncoder,StandardScaler
 
 
 class  FeatureEngineering:
-    def __init__(self,df):
-        self.df = df
+    def __init__(self):
+        pass
 
     def cleandata(self):
         data  = pd.read_csv('/home/rupeshgarsondiya/workstation/lab/Project-1/Data/user_behavior_dataset.csv') # load Dataset
@@ -40,7 +40,7 @@ class  FeatureEngineering:
         return data
     
 
-    def get_clean_data(self,df):
+    def get_clean_data(self):
         df  =  FeatureEngineering().cleandata()
         oe = OrdinalEncoder() # Ordinal Encoding to  convert categorical data into numerical data
         df[['P_Model','OS','Gender']] = oe.fit_transform(df[['P_Model','OS','Gender']])
