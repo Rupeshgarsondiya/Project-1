@@ -16,9 +16,10 @@ import seaborn as sns
 import streamlit as st
 from sklearn.preprocessing import Binarizer,OrdinalEncoder,StandardScaler
 
-
+'''create class FeatureEngineering is  created to perform feature engineering on the dataset'''
 class  FeatureEngineering:
-    def __init__(self):
+
+    def __init__(self): # define  constructor
         pass
 
     def cleandata(self):
