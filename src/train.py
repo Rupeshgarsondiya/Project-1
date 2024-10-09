@@ -28,13 +28,13 @@ st.markdown(
     <style>
     /* Change the background color of the entire page */
     .stApp {
-        background-color: #f0f2f6;  /* Set your desired color here */
+        background-color: #f0f0f0;  /* Set your desired color here */
     }
     </style>
     """,
     unsafe_allow_html=True
 )
-st.title('Welcome  !')
+st.title('  Classify user behavior based on mobile data  ')
 class Model_Train:
     def __init__(self) -> None:
         pass
@@ -53,51 +53,48 @@ class Model_Train:
     def train_model(self):
         x_train,x_test,y_train,y_test = self.load_data() # calling load_data function to load data
 
-        st.write("- Enter 1 for Logistic Regreesion : ")
-        st.write("- Enter 2 for Random Forest Classifier : ")
-        st.write("- Enter 3 for Decision Tree Classifier : ")
-        st.write("- Enter 4 for  K-Nearest Neighbors : ")
-        st.write("- Enter 5 for  Support Vector Machine : ")
-        st.write("- Enter 6 for  Exit : ")
-        print()            
-        a = st.number_input('-> Enter number which model  you want to train : ',min_value=1,max_value=5,placeholder = 'Enter number',value=None)
-        if a ==1:
+        # Define the options for the dropdown menu
+        options = ['Logistic Regreesion', 'Random Forest Classifier', 'Decision Tree', 'SVM','KNeighborsClassifier']
+
+        # Create the dropdown menu
+        
+        with st.container():
+         st.markdown('<div class="dropdown-left">', unsafe_allow_html=True)
+        selected_option = st.selectbox('Select Algoritham :', options)
+        st.markdown('</div>', unsafe_allow_html=True)
+
+        # Display the selected option
+        st.write(f'You selected: {selected_option}')
+
+        if selected_option== 'Logistic Regreesion':
             lr = LogisticRegression()
             lr.fit(x_train,y_train)
-            y_pred = lr.predict(x_test)
-            st.write('----------Logistic Regreesion-----------')
-            st.write('Accuracy Score',accuracy_score(y_test,y_pred))
-        elif a ==2:
-            rf = RandomForestClassifier(n_estimators=20,max_depth=3,n_jobs=-1,max_features=5)
+            ypred = lr.predict(x_test)
+            st.write("Accuracy of Logistic Regreesion : ",accuracy_score(y_test,ypred))
+
+        elif selected_option=='Random Forest Classifier':
+            rf = RandomForestClassifier()
             rf.fit(x_train,y_train)
-            y_pred1 = rf.predict(x_test)
-            st.write('---------Random Forest Classifier---------')
-            st.write('Accuracy Score',accuracy_score(y_test,y_pred1))
-        elif a==3:
-            dt = DecisionTreeClassifier(max_depth=3)
+            ypred1 = rf.predict(x_test)
+            st.write("Accuracy of Random Forest : ",accuracy_score(y_test,ypred1))
+
+        elif selected_option=='Decision Tree':
+            dt = DecisionTreeClassifier()
             dt.fit(x_train,y_train)
-            y_pred2 = dt.predict(x_test)
-            st.write('---------Decision Tree Classifier---------')
-            st.write('Accuracy Score',accuracy_score(y_test,y_pred2))
-        elif a ==4:
-            knn = KNeighborsClassifier()
-            knn.fit(x_train,y_train)
-            y_pred3 = knn.predict(x_test)
-            st.write('---------K-Nearest Neighbors---------')
-            st.write('Accuracy Score',accuracy_score(y_test,y_pred3))            
-        elif a==5:
+            ypred2 = dt.predict(x_test)
+            st.write("Accuracy of Decision tree : ",accuracy_score(y_test,ypred2))
+        elif selected_option =='SVM':
             svm = SVC()
             svm.fit(x_train,y_train)
-            y_pred4 = svm.predict(x_test)
-            st.write('---------Support Vector Machine---------')
-            st.write('Accuracy Score',accuracy_score(y_test,y_pred4))
-        elif a==6:
-            print()
-            print()
-            st.write('----THANK YOU-----')
+            ypred3 = svm.predict(x_test)
+            st.write("Accuracy of SVM : ",accuracy_score(y_test,ypred3))
+        elif selected_option=='KNeighborsClassifier':
+            knn = KNeighborsClassifier()
+            knn.fit(x_train,y_train)
+            ypred4  = knn.predict(x_test)
+            st.write("Accuracy of KNN classifier : ",accuracy_score(y_test,ypred4))
         else:
-            print('Invalid input !')
-
+            pass
 
 
 tm = Model_Train()
