@@ -22,19 +22,6 @@ from sklearn.metrics import accuracy_score
 
 
 
-
-st.markdown(
-    """
-    <style>
-    /* Change the background color of the entire page */
-    .stApp {
-        background-color: #f0f0f0;  /* Set your desired color here */
-    }
-    </style>
-    """,
-    unsafe_allow_html=True
-)
-st.title('  Classify user behavior based on mobile data  ')
 class Model_Train:
     def __init__(self) -> None:
         pass
@@ -70,35 +57,33 @@ class Model_Train:
             lr = LogisticRegression()
             lr.fit(x_train,y_train)
             ypred = lr.predict(x_test)
-            st.write("Accuracy of Logistic Regreesion : ",accuracy_score(y_test,ypred))
+            
 
         elif selected_option=='Random Forest Classifier':
             rf = RandomForestClassifier()
             rf.fit(x_train,y_train)
             ypred1 = rf.predict(x_test)
-            st.write("Accuracy of Random Forest : ",accuracy_score(y_test,ypred1))
+            
 
         elif selected_option=='Decision Tree':
             dt = DecisionTreeClassifier()
             dt.fit(x_train,y_train)
             ypred2 = dt.predict(x_test)
-            st.write("Accuracy of Decision tree : ",accuracy_score(y_test,ypred2))
+            
         elif selected_option =='SVM':
             svm = SVC()
             svm.fit(x_train,y_train)
             ypred3 = svm.predict(x_test)
-            st.write("Accuracy of SVM : ",accuracy_score(y_test,ypred3))
+            
         elif selected_option=='KNeighborsClassifier':
             knn = KNeighborsClassifier()
             knn.fit(x_train,y_train)
             ypred4  = knn.predict(x_test)
-            st.write("Accuracy of KNN classifier : ",accuracy_score(y_test,ypred4))
+            
         else:
             pass
 
-
-tm = Model_Train()
-tm.train_model()
+        return selected_option
 
 
 

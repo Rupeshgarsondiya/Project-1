@@ -16,7 +16,7 @@ class test:
     def predict_data():
 
     # Define the options for the dropdown menu
-    options = ['Google Pixel 5', 'OnePlus 9', 'iPhone 12', 'Samsung Galaxy S21','Xiaomi Mi 11']
+     ['Google Pixel 5', 'OnePlus 9', 'iPhone 12', 'Samsung Galaxy S21','Xiaomi Mi 11']
 
     # Create the dropdown menu
     selected_option = st.selectbox('Choose an option:', options)
