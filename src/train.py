@@ -29,12 +29,7 @@ class Model_Train:
     '''load_data()  fuction use for to get the clean data or feature transformed data '''
     def load_data(self):
         data = FeatureEngineering() #  calling the class
-        X,y = data.get_clean_data() #  load the clean data
-        st.write(X)
-        st.write(y)
-        x_train,x_test,y_train,y_test = train_test_split(X,y,test_size=0.2)
-
-        return  x_train,x_test,y_train,y_test  # perform train test split
+        return  data.get_clean_data()
     
     '''This function use to train model '''
     def train_model(self):

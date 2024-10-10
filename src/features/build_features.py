@@ -15,6 +15,10 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import streamlit as st
 from sklearn.preprocessing import Binarizer,OneHotEncoder,StandardScaler
+from sklearn.model_selection import train_test_split
+from sklearn.pipeline import Pipeline,make_pipeline
+from  sklearn.compose import  ColumnTransformer
+
 
 '''create class FeatureEngineering is  created to perform feature engineering on the dataset'''
 class  FeatureEngineering:
@@ -43,6 +47,22 @@ class  FeatureEngineering:
 
     def get_clean_data(self):
         df  =  FeatureEngineering().cleandata()
+
+        # train test split
+        x_train,y_train,x_test,y_test = train_test_split(x = df.drop(columns=['User Behavior Class'],y = df['User Behavior Class'],test_size = 0.2))
+        ct1 = ColumnTransformer([('P_Model',OneHotEncoder(),0),('oprating system',OneHotEncoder(),1),('age encode',OneHotEncoder(),8)],remainder='passthrough')
+        ct2 = ColumnTransformer([('scaling battry(mah)',StandardScaler(),4)])
+
+        #create sklearn pipline
+        pipe = make_pipeline(ct1,ct2)
+        pipe.fit(x_train)
+        x_train = pipe.transform(x_train)
+        x_test = pipe.transform(x_test)
+        
+
+        return x_train,y_train,x_test,y_test
+    
+
         oe = OneHotEncoder(sparse_output= False) # Ordinal Encoding to  convert categorical data into numerical data
         categorical_columns = ['P_Model', 'OS', 'Gender']
 
