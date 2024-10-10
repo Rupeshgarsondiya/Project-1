@@ -30,8 +30,8 @@ class Model_Train:
     def load_data(self):
         data = FeatureEngineering() #  calling the class
         X,y = data.get_clean_data() #  load the clean data
-        print(X.shape)
-        print(y.shape)
+        st.write(X)
+        st.write(y)
         x_train,x_test,y_train,y_test = train_test_split(X,y,test_size=0.2)
 
         return  x_train,x_test,y_train,y_test  # perform train test split
@@ -57,36 +57,23 @@ class Model_Train:
             lr = LogisticRegression()
             lr.fit(x_train,y_train)
             ypred = lr.predict(x_test)
-            
-
         elif selected_option=='Random Forest Classifier':
             rf = RandomForestClassifier()
             rf.fit(x_train,y_train)
             ypred1 = rf.predict(x_test)
-            
-
         elif selected_option=='Decision Tree':
             dt = DecisionTreeClassifier()
             dt.fit(x_train,y_train)
             ypred2 = dt.predict(x_test)
-            
         elif selected_option =='SVM':
             svm = SVC()
             svm.fit(x_train,y_train)
             ypred3 = svm.predict(x_test)
-            
         elif selected_option=='KNeighborsClassifier':
             knn = KNeighborsClassifier()
             knn.fit(x_train,y_train)
-            ypred4  = knn.predict(x_test)
-            
+            ypred4  = knn.predict(x_test)           
         else:
             pass
 
         return selected_option
-
-
-
-
-
-

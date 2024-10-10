@@ -6,9 +6,11 @@ Organization : L.J University
 
 import streamlit as st
 from train import *
+from test import *
 
 
-st.title('Behavior classification on User behavior dataset')
+# Centering the title using HTML and CSS
+st.markdown("<h1 style='text-align: center;'>Behavior classification on User behavior dataset</h1>", unsafe_allow_html=True)
 
 
 class Main:
@@ -16,5 +18,9 @@ class Main:
         pass
 
     def run(self):
-        pass
-    
+        t = test()
+        t.predict_data()
+        
+
+m = Main()
+m.run()

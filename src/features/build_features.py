@@ -14,7 +14,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
 import streamlit as st
-from sklearn.preprocessing import Binarizer,OrdinalEncoder,StandardScaler
+from sklearn.preprocessing import Binarizer,OneHotEncoder,StandardScaler
 
 '''create class FeatureEngineering is  created to perform feature engineering on the dataset'''
 class  FeatureEngineering:
@@ -43,14 +43,25 @@ class  FeatureEngineering:
 
     def get_clean_data(self):
         df  =  FeatureEngineering().cleandata()
-        oe = OrdinalEncoder() # Ordinal Encoding to  convert categorical data into numerical data
-        df[['P_Model','OS','Gender']] = oe.fit_transform(df[['P_Model','OS','Gender']])
-        print(df.head())
+        oe = OneHotEncoder(sparse_output= False) # Ordinal Encoding to  convert categorical data into numerical data
+        categorical_columns = ['P_Model', 'OS', 'Gender']
 
-        sc = StandardScaler() #  Standard Scaling to convert data into standard distribution
-        df_update = sc.fit_transform(df.drop(columns = 'User Behavior Class'))
+        # Initialize the OneHotEncoder
+        encoder = OneHotEncoder(sparse_output=False)
 
-        # convert numpy array  to pandas dataframe
-        df1 = pd.DataFrame(df_update,columns=['P_Model','OS','App_Time(hours/day)','Screen_time(hours/day)','Battery_Drain(mAh/day)','Installed_app'	,'Data_Usage(GB/day)','Age','Gender'])
+        # Fit and transform the categorical data   
+        encoded_data = encoder.fit_transform(df[categorical_columns])
 
-        return df1,df['User Behavior Class']
+        # Convert encoded data to a DataFrame and concatenate with the original dataset
+        encoded_df = pd.DataFrame(encoded_data, columns=encoder.get_feature_names_out(categorical_columns))
+
+        # Drop original categorical columns and add the encoded ones
+        df_encoded = pd.concat([df.drop(columns=categorical_columns), encoded_df], axis=1)
+
+        # Show the first few rows of the updated dataset
+        std = StandardScaler()
+        df_std = std.fit_transform(df_encoded[['Battery_Drain(mAh/day)']])
+        df1 = df_encoded.drop(columns=['User Behavior Class','Battery_Drain(mAh/day)'])
+        df_final = pd.concat([df1,pd.DataFrame(df_std).rename(columns={0:'Battery_Drain(mAh/day)'})],axis=1)
+
+        return df_final,df_encoded['User Behavior Class']
